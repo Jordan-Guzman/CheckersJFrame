@@ -13,12 +13,13 @@ public class View extends JFrame implements ActionListener
    JPanel[][] filledBoard = new JPanel[8][8];
    Color redSquare = Color.RED;
    Color blackSquare = Color.BLACK;
-   JFrame frame = new JFrame();
+   JFrame frame;
    GameTimer timer;
    
    int count = 0;
    JButton timerButton;
    HumanPlayer human;
+   Controller controller;
    JPanel timerBar;
 //   JLabel timeText;
    JLabel timerText = new JLabel("00:00:00");
@@ -40,8 +41,9 @@ public class View extends JFrame implements ActionListener
       pawnBlack = new ImageIcon(blackPawn);
       kingRed = new ImageIcon(redKing);
       kingBlack = new ImageIcon(blackKing);
-      
-//      frame = new JFrame();
+      timer = new GameTimer();
+      frame = new JFrame();
+      controller = new Controller();
       human = new HumanPlayer();
       checkersBoard = new CheckersBoard();
       frame.setSize(850, 850);
@@ -52,6 +54,15 @@ public class View extends JFrame implements ActionListener
       boardPattern = checkersBoard.getBoardPattern();
 //      createBoard();
       loadBoard();
+      active();
+   }
+   
+   public void active()
+   {
+      while(frame.isDisplayable())
+      {
+         timerText.setText(timer.getTimerValue());
+      }
    }
    
    public View(String str)
@@ -253,6 +264,19 @@ public class View extends JFrame implements ActionListener
          timerButton.setText("Start");
          resetButtonCount();
       }
-      human.buttonPress();
+      controller.pressButton();
+      buttonPressed();
+   }
+   
+   public void buttonPressed()
+   {
+      if(controller.getButtonPress() == true)
+      {
+         timer.startRun();
+      }
+      else
+      {
+         System.out.println("Error. Timer not working.");
+      }
    }
 }

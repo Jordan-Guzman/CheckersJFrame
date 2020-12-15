@@ -2,13 +2,21 @@
 public class Controller
 {
    Model model;
+   boolean buttonPress;
+   
    public Controller()
    {
-      model = new Model();
+      buttonPress = false;
    }
    
-   public void buttonPress()
+   public void pressButton()
    {
-      model.initTimer();
+      buttonPress = true;
    }
+   
+   public boolean getButtonPress()
+   {
+      return buttonPress;
+   }
+   
 }

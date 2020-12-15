@@ -1,15 +1,44 @@
 
-public class HumanPlayer
+public class HumanPlayer implements Player
 {
-   Controller controller;
    
    public HumanPlayer()
    {
-      controller = new Controller();
+      
    }
    
-   public void buttonPress()
+   public boolean moveRight() 
    {
-      controller.buttonPress();
+      return true;
+   }
+   
+   public boolean moveLeft() 
+   {
+      return true;
+   }
+   
+   public boolean eatPiece()
+   {
+      return true;
+   }
+   
+   public boolean kingMoveRight()
+   {
+      return true;
+   }
+   
+   public boolean kingMoveLeft()
+   {
+      return true;
+   }
+   
+   public boolean kingMoveBackRight()
+   {
+      return true;
+   }
+   
+   public boolean kingMoveBackLeft()
+   {
+      return true;
    }
 }

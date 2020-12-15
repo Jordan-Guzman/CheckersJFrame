@@ -8,7 +8,6 @@ public class GameTimer extends Thread implements Runnable
    int count;
    ActionListener begin = new StartTimer();
    Timer timer = new Timer(1000, begin);
-   View view = new View("");
    
    //constructor instantiates counter
    public GameTimer()
@@ -51,7 +50,7 @@ public class GameTimer extends Thread implements Runnable
          }
          strTime = String.format("%02d" + ":" + "%02d" + ":" + "%02d", hr, min, sec);
          System.out.println(strTime);
-         view.setTimerText(strTime);
+         setTimerValue(strTime);
       }
    }
    
@@ -64,6 +63,16 @@ public class GameTimer extends Thread implements Runnable
    public void run()
    {
       timer.start();
+   }
+   
+   private void setTimerValue(String str)
+   {
+      this.strTime = str;
+   }
+   
+   public String getTimerValue()
+   {
+      return strTime;
    }
 }
 
