@@ -31,8 +31,8 @@ public class View extends JFrame implements ActionListener
    Icon pawnBlack;
    Icon kingRed;
    Icon kingBlack;
-//   ActionListener timerListener = new TimerListener();
    
+   //Strings for the image icon paths
    String blackKing = "checkersPieces" + "/" + "King" + " " + "(Black)" + ".png";
    String redKing = "checkersPieces" + "/" + "King" + " " + "(Red)" + ".png";
    String blackPawn = "checkersPieces" + "/" + "Pawn" + " " + "(Black)" + ".png";
@@ -154,19 +154,12 @@ public class View extends JFrame implements ActionListener
             frame.add(timerBar = new JPanel());
             timerBar.setBackground(Color.LIGHT_GRAY);
             timerBar.add(timerText);
-            timerText.setText(getTimerText());
          }
          timerBar();
       }
       frame.add(timerButton());
    }
-//*/
-   
-   public void test()
-   {
-      timerText.setText("repainted");
-   }
-   
+//*/ 
    public void active(String str)
    {
       while(this.frame.isDisplayable())
@@ -230,19 +223,27 @@ public class View extends JFrame implements ActionListener
          timerButton.setText("Start");
          resetButtonCount();
       }
-      controller.pressButton();
-      buttonPressed();
+      controller.pressTimerButton();
+      timerButtonPressed();
    }
    
-   public void buttonPressed()
+   public void timerButtonPressed()
    {
-      if(controller.getButtonPress() == true)
+      if(controller.getTimerButtonPress() == true)
       {
          timer.startRun();
       }
       else
       {
          System.out.println("Error. Timer not working.");
+      }
+   }
+   
+   private class RedPieceMove implements ActionListener
+   {
+      public void actionPerformed(ActionEvent e)
+      {
+         
       }
    }
    

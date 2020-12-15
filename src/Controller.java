@@ -9,12 +9,12 @@ public class Controller
       buttonPress = false;
    }
    
-   public void pressButton()
+   public void pressTimerButton()
    {
       buttonPress = true;
    }
    
-   public boolean getButtonPress()
+   public boolean getTimerButtonPress()
    {
       return buttonPress;
    }
