@@ -1,8 +1,7 @@
 
-public class HumanPlayer implements Player
+public class ComputerPlayer implements Player
 {
-   
-   public HumanPlayer()
+   public ComputerPlayer()
    {
       
    }

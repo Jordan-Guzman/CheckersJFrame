@@ -6,6 +6,6 @@ public class FinalProject
    {
       CheckersBoard board = new CheckersBoard();
       View view = new View();
-//      board.consoleBoardPattern();
+      board.consoleBoardPattern();
    }
 }

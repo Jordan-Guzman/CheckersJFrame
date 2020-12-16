@@ -13,15 +13,19 @@ public class View extends JFrame implements ActionListener
    JPanel[][] filledBoard = new JPanel[8][8];
    Color redSquare = Color.RED;
    Color blackSquare = Color.BLACK;
-   JFrame frame = new JFrame();
+   JFrame frame;
    GameTimer timer;
    
    int count = 0;
    JButton timerButton;
+   JButton piece;
    HumanPlayer human;
+   Controller controller;
    JPanel timerBar;
-//   JLabel timeText;
    JLabel timerText = new JLabel("00:00:00");
+   JButton blackPiece;
+   JButton redPiece;
+   JButton blackTile;
    String str = "00:00:00";
    Icon pawnRed;
    Icon pawnBlack;
@@ -40,8 +44,9 @@ public class View extends JFrame implements ActionListener
       pawnBlack = new ImageIcon(blackPawn);
       kingRed = new ImageIcon(redKing);
       kingBlack = new ImageIcon(blackKing);
-      
-//      frame = new JFrame();
+      timer = new GameTimer();
+      frame = new JFrame();
+      controller = new Controller();
       human = new HumanPlayer();
       checkersBoard = new CheckersBoard();
       frame.setSize(850, 850);
@@ -52,6 +57,15 @@ public class View extends JFrame implements ActionListener
       boardPattern = checkersBoard.getBoardPattern();
 //      createBoard();
       loadBoard();
+      active();
+   }
+   
+   public void active()
+   {
+      while(frame.isDisplayable())
+      {
+         timerText.setText(timer.getTimerValue());
+      }
    }
    
    public View(String str)
@@ -60,56 +74,6 @@ public class View extends JFrame implements ActionListener
       active(str);
    }
    
-/*   
-   private void createBoard()
-   {
-      for (int i = 0; i < 8; i++)
-      {
-         JPanel square = new JPanel();
-         if(boardPattern[i][0] == true)
-         {
-            square.setBackground(redSquare);
-         }
-         else
-         {
-            square.setBackground(blackSquare);
-         }
-         frame.add(square);
-         
-         for(int j = 1; j < 8; j++)
-         {
-            JPanel square2 = new JPanel();
-            
-            if(boardPattern[i][j] == true)
-            {
-               square2.setBackground(redSquare);
-            }
-            else
-            {
-               square2.setBackground(blackSquare);
-            }
-            frame.add(square2);
-         }
-      }
-      
-      for(int n = 0; n < 6; n++)
-      {
-         if(n == 4)
-         {
-            //add JLabel that updates text of timer
-            frame.add(timerBar = new JPanel());
-            timerBar.setBackground(Color.LIGHT_GRAY);
-            timerBar.setLayout(new BorderLayout());
-            timerBar.add(timeText, BorderLayout.CENTER);
-         }
-         timerBar();
-      }
-      frame.add(timerButton());
-   }
-   
-*/
-   
-///*
    //this is the filled board
    private void loadBoard()
    {
@@ -132,11 +96,18 @@ public class View extends JFrame implements ActionListener
             filledBoard[row][0] = square;
             if(row <= 2)
             {
-               square.add(new JLabel(pawnBlack), BorderLayout.CENTER);
+               square.add(blackPiece = new JButton(pawnBlack), BorderLayout.CENTER);
+               blackPiece.setBackground(Color.BLACK);
             }
             else if(row > 4)
             {
-               square.add(new JLabel(pawnRed), BorderLayout.CENTER);
+               square.add(redPiece = new JButton(pawnRed), BorderLayout.CENTER);
+               redPiece.setBackground(Color.BLACK);
+            }
+            else if((row > 2) && (row <= 4))
+            {
+               square.add(blackTile = new JButton(), BorderLayout.CENTER);
+               blackTile.setBackground(Color.BLACK);
             }
          }
          frame.add(square);
@@ -157,11 +128,18 @@ public class View extends JFrame implements ActionListener
                filledBoard[row][col] = square2;
                if(row <= 2)
                {
-                  square2.add(new JLabel(pawnBlack), BorderLayout.CENTER);
+                  square2.add(blackPiece = new JButton(pawnBlack), BorderLayout.CENTER);
+                  blackPiece.setBackground(Color.BLACK);
                }
                else if(row > 4)
                {
-                  square2.add(new JLabel(pawnRed), BorderLayout.CENTER);
+                  square2.add(redPiece = new JButton(pawnRed), BorderLayout.CENTER);
+                  redPiece.setBackground(Color.BLACK);
+               }
+               else if((row > 2) && (row <= 4))
+               {
+                  square2.add(blackTile = new JButton(), BorderLayout.CENTER);
+                  blackTile.setBackground(Color.BLACK);
                }
             }
             frame.add(square2);
@@ -177,7 +155,6 @@ public class View extends JFrame implements ActionListener
             timerBar.setBackground(Color.LIGHT_GRAY);
             timerBar.add(timerText);
             timerText.setText(getTimerText());
-            timerText.repaint();
          }
          timerBar();
       }
@@ -253,6 +230,32 @@ public class View extends JFrame implements ActionListener
          timerButton.setText("Start");
          resetButtonCount();
       }
-      human.buttonPress();
+      controller.pressButton();
+      buttonPressed();
+   }
+   
+   public void buttonPressed()
+   {
+      if(controller.getButtonPress() == true)
+      {
+         timer.startRun();
+      }
+      else
+      {
+         System.out.println("Error. Timer not working.");
+      }
+   }
+   
+   public boolean checkMove()
+   {
+      return true;
+   }
+   
+   public void move()
+   {
+      if(checkMove() == true)
+      {
+         
+      }
    }
 }
