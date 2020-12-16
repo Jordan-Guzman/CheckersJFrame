@@ -23,7 +23,7 @@ public class View extends JFrame implements ActionListener
    Controller controller;
    JPanel timerBar;
    JLabel timerText = new JLabel("00:00:00");
-   JButton blackPiece;
+   JLabel blackPiece;
    JButton redPiece;
    JButton blackTile;
    String str = "00:00:00";
@@ -31,6 +31,7 @@ public class View extends JFrame implements ActionListener
    Icon pawnBlack;
    Icon kingRed;
    Icon kingBlack;
+   ActionListener redMove = new RedPieceMove();
    
    //Strings for the image icon paths
    String blackKing = "checkersPieces" + "/" + "King" + " " + "(Black)" + ".png";
@@ -96,7 +97,7 @@ public class View extends JFrame implements ActionListener
             filledBoard[row][0] = square;
             if(row <= 2)
             {
-               square.add(blackPiece = new JButton(pawnBlack), BorderLayout.CENTER);
+               square.add(blackPiece = new JLabel(pawnBlack), BorderLayout.CENTER);
                blackPiece.setBackground(Color.BLACK);
             }
             else if(row > 4)
@@ -128,7 +129,7 @@ public class View extends JFrame implements ActionListener
                filledBoard[row][col] = square2;
                if(row <= 2)
                {
-                  square2.add(blackPiece = new JButton(pawnBlack), BorderLayout.CENTER);
+                  square2.add(blackPiece = new JLabel(pawnBlack), BorderLayout.CENTER);
                   blackPiece.setBackground(Color.BLACK);
                }
                else if(row > 4)
@@ -246,6 +247,7 @@ public class View extends JFrame implements ActionListener
          
       }
    }
+   
    
    public boolean checkMove()
    {
