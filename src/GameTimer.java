@@ -49,7 +49,6 @@ public class GameTimer extends Thread implements Runnable
             hr++;
          }
          strTime = String.format("%02d" + ":" + "%02d" + ":" + "%02d", hr, min, sec);
-         System.out.println(strTime);
          setTimerValue(strTime);
       }
    }

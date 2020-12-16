@@ -32,6 +32,7 @@ public class View extends JFrame implements ActionListener
    Icon kingRed;
    Icon kingBlack;
    ActionListener redMove = new RedPieceMove();
+   ActionListener moveToBlackTile = new MoveToBlackTile();
    
    //Strings for the image icon paths
    String blackKing = "checkersPieces" + "/" + "King" + " " + "(Black)" + ".png";
@@ -56,7 +57,6 @@ public class View extends JFrame implements ActionListener
       frame.setVisible(true);
       frame.setLayout(new GridLayout(9, 8));
       boardPattern = checkersBoard.getBoardPattern();
-//      createBoard();
       loadBoard();
       active();
    }
@@ -136,11 +136,13 @@ public class View extends JFrame implements ActionListener
                {
                   square2.add(redPiece = new JButton(pawnRed), BorderLayout.CENTER);
                   redPiece.setBackground(Color.BLACK);
+                  redPiece.addActionListener(redMove);
                }
                else if((row > 2) && (row <= 4))
                {
                   square2.add(blackTile = new JButton(), BorderLayout.CENTER);
                   blackTile.setBackground(Color.BLACK);
+                  blackTile.addActionListener(moveToBlackTile);
                }
             }
             frame.add(square2);
@@ -244,7 +246,15 @@ public class View extends JFrame implements ActionListener
    {
       public void actionPerformed(ActionEvent e)
       {
-         
+         System.out.println("red button pressed");
+      }
+   }
+   
+   private class MoveToBlackTile implements ActionListener
+   {
+      public void actionPerformed(ActionEvent e)
+      {
+         System.out.println("Move to this black tile");
       }
    }
    
