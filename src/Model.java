@@ -4,7 +4,7 @@ public class Model
    
    public Model()
    {
-      
+      View.legalMove();
    }
    
    

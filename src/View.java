@@ -100,11 +100,13 @@ public class View extends JFrame implements ActionListener
          {
             square.setBackground(blackSquare);
             filledBoard[row][0] = square;
+            buttons[row][0] = blackTile;
             
             if(row <= 2)
             {
                square.add(blackPiece = new JLabel(pawnBlack), BorderLayout.CENTER);
                blackPiece.setBackground(Color.BLACK);
+               buttons[row][0] = blackTile;
                /*
                  when computer moves a piece, it repaints where it was move to, then makes its previous place a black jbutton
                 */
@@ -114,12 +116,14 @@ public class View extends JFrame implements ActionListener
                square.add(blackTile = new JButton(), BorderLayout.CENTER);
                blackTile.setBackground(Color.BLACK);
                blackTile.addActionListener(moveToBlackTile);
+               buttons[row][0] = blackTile;
             }
             else if(row > 4)
             {
                square.add(redPiece = new JButton(pawnRed), BorderLayout.CENTER);
                redPiece.setBackground(Color.BLACK);
                redPiece.addActionListener(redMove);
+               buttons[row][0] = redPiece;
             }
          }
          frame.add(square);
@@ -138,22 +142,27 @@ public class View extends JFrame implements ActionListener
             {
                square2.setBackground(blackSquare);
                filledBoard[row][col] = square2;
+               buttons[row][col] = blackTile;
+               
                if(row <= 2)
                {
                   square2.add(blackPiece = new JLabel(pawnBlack), BorderLayout.CENTER);
                   blackPiece.setBackground(Color.BLACK);
+                  buttons[row][col] = blackTile;
                }
                else if((row > 2) && (row <= 4))
                {
                   square2.add(blackTile = new JButton(), BorderLayout.CENTER);
                   blackTile.setBackground(Color.BLACK);
                   blackTile.addActionListener(moveToBlackTile);
+                  buttons[row][col] = blackTile;
                }
                else if(row > 4)
                {
                   square2.add(redPiece = new JButton(pawnRed), BorderLayout.CENTER);
                   redPiece.setBackground(Color.BLACK);
                   redPiece.addActionListener(redMove);
+                  buttons[row][col] = redPiece;
                }
             }
             frame.add(square2);
@@ -258,15 +267,28 @@ public class View extends JFrame implements ActionListener
       public void actionPerformed(ActionEvent e)
       {
          System.out.println("red button pressed");
-//         redPieceClick();
+         redPieceClick();
          
-         for(int i = 0; i < 8; i++)
+         for(int m = 0; m < 8; m++)
          {
-            for(int j = 0; j < 8; j++)
+            for(int n = 0; n < 8; n++)
             {
-               if(buttons[i][j] == e.getSource())
+               if(buttons[m][n] == (JButton)e.getSource())
                {
-                  System.out.println("row " + i + " " + "column " + j);
+                  System.out.println("row " + m + " " + "column " + n);
+                  //swap red piece button with button here
+                  JButton red = (JButton)e.getSource();
+                  JPanel panel = (JPanel) red.getParent();
+                  
+                  panel.removeAll();
+                  panel.revalidate();
+//                  panel.repaint();
+                  panel.add(blackTile = new JButton(), BorderLayout.CENTER);
+                  panel.revalidate();
+                  blackTile.setBackground(Color.BLACK);
+                  blackTile.addActionListener(moveToBlackTile);
+                  panel.repaint();
+                  buttons[m][n] = blackTile;
                }
             }
          }
@@ -278,14 +300,36 @@ public class View extends JFrame implements ActionListener
       public void actionPerformed(ActionEvent e)
       {
          System.out.println("Move to this black tile");
+         
          if(getClickValue() == true)
          {
             //move red piece to this tile
             System.out.println("Red piece was clicked and can now move");
-//            JButton test = (JButton)e.getSource();
-//            test.add(redPiece);
-//            moveToBlackTile();
-//            resetClickValue();
+            for(int m = 0; m < 8; m++)
+            {
+               for(int n = 0; n < 8; n++)
+               {
+                  if(buttons[m][n] == (JButton)e.getSource())
+                  {
+                     System.out.println("row " + m + " " + "column " + n);
+                     
+                     JButton black = (JButton)e.getSource();
+                     JPanel panel = (JPanel) black.getParent();
+                     
+                     panel.removeAll();
+                     panel.revalidate();
+//                     panel.repaint();
+                     panel.add(redPiece = new JButton(pawnRed), BorderLayout.CENTER);
+                     panel.revalidate();
+                     redPiece.setBackground(Color.BLACK);
+                     redPiece.addActionListener(redMove);
+                     panel.repaint();
+                     buttons[m][n] = redPiece;
+//                     frame.revalidate();
+                     resetClickValue();
+                  }
+               }
+            }
          }
       }
    }
@@ -298,6 +342,11 @@ public class View extends JFrame implements ActionListener
    public void redPieceClick()
    {
       clicked = true;
+   }
+   
+   public static void legalMove()
+   {
+      
    }
    
    public void resetClickValue()
